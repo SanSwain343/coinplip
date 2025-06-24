@@ -1,53 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coinplip Game</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTW WIN</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <div id="registerSection">
-      <h2>Register</h2>
-      <input type="text" id="phone" placeholder="Phone Number"><br>
-      <input type="password" id="password" placeholder="Password"><br>
-      <button onclick="register()">Register</button>
-      <p id="regMsg"></p>
-    </div>
 
-    <div id="gameSection" class="hidden">
-      <h2>Coinplip Game</h2>
-      <p>Balance: <span id="balance">1000</span> coins</p>
-      <p>Timer: <span id="timer">30</span>s</p>
+<div class="container" id="register-page">
+  <h2>Register</h2>
+  <input type="text" id="phone" placeholder="Phone number"><br>
+  <input type="password" id="password" placeholder="Password"><br>
+  <input type="password" id="confirm-password" placeholder="Confirm password"><br>
+  <button onclick="registerUser()">Register</button>
+</div>
 
-      <div>
-        <h3>Choose Color</h3>
-        <button onclick="selectColor('Red')">Red</button>
-        <button onclick="selectColor('Green')">Green</button>
-        <button onclick="selectColor('Violet')">Violet</button>
-      </div>
+<div class="container hidden" id="login-page">
+  <h2>Login</h2>
+  <input type="text" id="login-phone" placeholder="Phone number"><br>
+  <input type="password" id="login-password" placeholder="Password"><br>
+  <button onclick="loginUser()">Login</button>
+</div>
 
-      <div>
-        <h3>Choose Size</h3>
-        <button onclick="selectSize('Big')">Big</button>
-        <button onclick="selectSize('Small')">Small</button>
-      </div>
+<div class="container hidden" id="main-page">
+  <h2>Welcome to BTW WIN</h2>
+  <p>Wallet: ₹<span id="wallet">1000</span></p>
+  <button onclick="showWinGo()">Go to Win Go</button>
+</div>
 
-      <div>
-        <h3>Bet Amount</h3>
-        <select id="betAmount">
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-      </div>
-
-      <button onclick="startGame()">Start Round</button>
-      <p id="result"></p>
-    </div>
+<div class="container hidden" id="win-go-page">
+  <h2>Win Go</h2>
+  <p>Time left: <span id="timer">30</span>s</p>
+  <div>
+    <button onclick="selectColor('Red')">Red</button>
+    <button onclick="selectColor('Green')">Green</button>
+    <button onclick="selectColor('Violet')">Violet</button>
   </div>
-  <script src="script.js"></script>
+  <div>
+    <button onclick="selectSize('Big')">Big</button>
+    <button onclick="selectSize('Small')">Small</button>
+  </div>
+  <select id="betAmount">
+    <option value="10">₹10</option>
+    <option value="20">₹20</option>
+    <option value="50">₹50</option>
+    <option value="100">₹100</option>
+  </select>
+  <button onclick="placeBet()">Place Bet</button>
+  <ul id="history"></ul>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

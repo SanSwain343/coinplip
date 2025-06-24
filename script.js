@@ -1,93 +1,73 @@
-let users = {};
-let currentUser = null;
-let timerInterval;
-let timeLeft = 30;
-let colorChoice = null;
-let sizeChoice = null;
+let wallet = 1000;
+let currentBets = {};
+let timer, count = 30;
 
-function register() {
+function showPage(id) {
+  document.querySelectorAll('.container').forEach(div => div.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function registerUser() {
   const phone = document.getElementById('phone').value;
   const password = document.getElementById('password').value;
-  const regMsg = document.getElementById('regMsg');
-
-  if (!phone || !password) {
-    regMsg.innerText = "All fields required.";
-    return;
-  }
-
-  if (users[phone]) {
-    regMsg.innerText = "Phone number already used.";
-    return;
-  }
-
-  users[phone] = { password, balance: 1000 };
-  currentUser = phone;
-  regMsg.innerText = "Registered!";
-  document.getElementById('registerSection').classList.add('hidden');
-  document.getElementById('gameSection').classList.remove('hidden');
-  updateBalance();
+  const confirm = document.getElementById('confirm-password').value;
+  if (password !== confirm) return alert("Passwords do not match");
+  localStorage.setItem('user', JSON.stringify({ phone, password, wallet: 1000 }));
+  alert("Registered!");
+  showPage('login-page');
 }
 
-function updateBalance() {
-  document.getElementById('balance').innerText = users[currentUser].balance;
+function loginUser() {
+  const phone = document.getElementById('login-phone').value;
+  const password = document.getElementById('login-password').value;
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user || user.phone !== phone || user.password !== password) return alert("Login failed");
+  wallet = user.wallet;
+  document.getElementById('wallet').innerText = wallet;
+  showPage('main-page');
 }
 
-function selectColor(color) {
-  colorChoice = color;
-}
-
-function selectSize(size) {
-  sizeChoice = size;
-}
-
-function startGame() {
-  const bet = parseInt(document.getElementById('betAmount').value);
-  const result = document.getElementById('result');
-
-  if (!colorChoice || !sizeChoice) {
-    result.innerText = "Select both color and size to start.";
-    return;
-  }
-
-  if (users[currentUser].balance < bet * 2) {
-    result.innerText = "Not enough balance.";
-    return;
-  }
-
-  users[currentUser].balance -= bet * 2;
-  updateBalance();
-  result.innerText = "Round started...";
-
-  timeLeft = 30;
-  document.getElementById('timer').innerText = timeLeft;
-
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    document.getElementById('timer').innerText = timeLeft;
-    if (timeLeft === 0) {
-      clearInterval(timerInterval);
-      endRound(bet);
+function showWinGo() {
+  showPage('win-go-page');
+  document.getElementById('wallet').innerText = wallet;
+  count = 30;
+  timer = setInterval(() => {
+    document.getElementById('timer').innerText = count;
+    count--;
+    if (count < 0) {
+      clearInterval(timer);
+      resolveBet();
     }
   }, 1000);
 }
 
-function endRound(bet) {
-  const colors = ['Red', 'Green', 'Violet'];
-  const sizes = ['Big', 'Small'];
-  const drawnColor = colors[Math.floor(Math.random() * colors.length)];
-  const drawnSize = sizes[Math.floor(Math.random() * sizes.length)];
+function selectColor(color) {
+  currentBets.color = color;
+}
+function selectSize(size) {
+  currentBets.size = size;
+}
+function placeBet() {
+  const amount = parseInt(document.getElementById('betAmount').value);
+  if (wallet < amount) return alert("Insufficient balance");
+  currentBets.amount = amount;
+}
 
-  let won = 0;
-  if (colorChoice === drawnColor) won += bet * 2;
-  if (sizeChoice === drawnSize) won += bet * 2;
-
-  users[currentUser].balance += won;
-  updateBalance();
-
-  document.getElementById('result').innerText =
-    `Result: ${drawnColor} + ${drawnSize}. ` +
-    (won ? `You won ${won} coins! 🎉` : "You lost 😢");
-
-  colorChoice = null;
-  sizeChoice = null;
+function resolveBet() {
+  const colorOptions = ['Red', 'Green', 'Violet'];
+  const sizeOptions = ['Big', 'Small'];
+  const winColor = colorOptions[Math.floor(Math.random() * 3)];
+  const winSize = sizeOptions[Math.floor(Math.random() * 2)];
+  let result = 'Lost';
+  if (currentBets.color === winColor || currentBets.size === winSize) {
+    wallet += currentBets.amount;
+    result = 'Won';
+  } else {
+    wallet -= currentBets.amount;
+  }
+  document.getElementById('wallet').innerText = wallet;
+  const li = document.createElement('li');
+  li.innerText = `Color: ${winColor}, Size: ${winSize}, Result: ${result}`;
+  document.getElementById('history').prepend(li);
+  currentBets = {};
 }
