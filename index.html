@@ -2,29 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coinplip Game</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>🎲 Coinplip Game 🎲</h1>
-    <div class="coin" id="coin">🪙</div>
-    <button onclick="flipCoin()">Flip Coin</button>
-
-    <div class="bet-options">
-      <h2>Bet Options</h2>
-      <div class="colors">
-        <button onclick="bet('Red')">🔴 Red</button>
-        <button onclick="bet('Green')">🟢 Green</button>
-        <button onclick="bet('Violet')">🟣 Violet</button>
-      </div>
-      <div class="sizes">
-        <button onclick="bet('Big')">⬆️ Big</button>
-        <button onclick="bet('Small')">⬇️ Small</button>
-      </div>
+    <div id="registerSection">
+      <h2>Register</h2>
+      <input type="text" id="phone" placeholder="Phone Number"><br>
+      <input type="password" id="password" placeholder="Password"><br>
+      <button onclick="register()">Register</button>
+      <p id="regMsg"></p>
     </div>
-    <p id="result"></p>
+
+    <div id="gameSection" class="hidden">
+      <h2>Coinplip Game</h2>
+      <p>Balance: <span id="balance">1000</span> coins</p>
+      <p>Timer: <span id="timer">30</span>s</p>
+
+      <div>
+        <h3>Choose Color</h3>
+        <button onclick="selectColor('Red')">Red</button>
+        <button onclick="selectColor('Green')">Green</button>
+        <button onclick="selectColor('Violet')">Violet</button>
+      </div>
+
+      <div>
+        <h3>Choose Size</h3>
+        <button onclick="selectSize('Big')">Big</button>
+        <button onclick="selectSize('Small')">Small</button>
+      </div>
+
+      <div>
+        <h3>Bet Amount</h3>
+        <select id="betAmount">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+
+      <button onclick="startGame()">Start Round</button>
+      <p id="result"></p>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
