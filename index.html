@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Coinplip</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coinplip Game</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Welcome to Coinplip</h1>
-  <p>This is your deployed site!</p>
+  <div class="container">
+    <h1>🎲 Coinplip Game 🎲</h1>
+    <div class="coin" id="coin">🪙</div>
+    <button onclick="flipCoin()">Flip Coin</button>
+
+    <div class="bet-options">
+      <h2>Bet Options</h2>
+      <div class="colors">
+        <button onclick="bet('Red')">🔴 Red</button>
+        <button onclick="bet('Green')">🟢 Green</button>
+        <button onclick="bet('Violet')">🟣 Violet</button>
+      </div>
+      <div class="sizes">
+        <button onclick="bet('Big')">⬆️ Big</button>
+        <button onclick="bet('Small')">⬇️ Small</button>
+      </div>
+    </div>
+    <p id="result"></p>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>

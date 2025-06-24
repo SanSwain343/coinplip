@@ -1,0 +1,41 @@
+body {
+  background: #1e1e2f;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  margin-top: 50px;
+}
+.coin {
+  font-size: 100px;
+  margin: 20px 0;
+}
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+.bet-options {
+  margin-top: 20px;
+}
+.bet-options h2 {
+  margin-bottom: 10px;
+}
+.colors button {
+  background-color: #333;
+  color: #fff;
+}
+.sizes button {
+  background-color: #555;
+  color: #fff;
+}
+#result {
+  margin-top: 20px;
+  font-size: 20px;
+}
